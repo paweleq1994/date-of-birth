@@ -1,10 +1,10 @@
 <?php
 require_once "autoloader.php";
 
-use app\DateOfBirth;
+use App\DateOfBirth;
 
-$personDOB = new DateOfBirth('06.04.2024');
+$personDOB = new DateOfBirth('27-09-1994');
 
 echo $personDOB->getPlainTextAge();
 echo '<br>';
-echo $personDOB->countWeekDays('Friday');
+echo $personDOB->countWeekDays('Monday');

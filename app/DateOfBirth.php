@@ -1,44 +1,25 @@
 <?php
 
-namespace app;
+namespace App;
 
-use DateTime;
-use DateTimeZone;
-use app\Services\DateOfBirthService;
-use RuntimeException;
+use App\Services\DateOfBirthService;
 
-class DateOfBirth extends DateTime
+class DateOfBirth
 {
     private DateOfBirthService $dateOfBirthService;
 
-    public function __construct(
-        private readonly string $birthday,
-        string                  $datetime = 'now',
-        ?DateTimeZone           $timezone = null
-    )
+    public function __construct(private readonly string $birthday)
     {
-        parent::__construct($datetime, $timezone);
-
-        $now = new DateTime();
-
-        if ($this->birthday > $now) {
-            throw new RuntimeException('Your birthday cannot be greater than now');
-        }
-
         $this->dateOfBirthService = new DateOfBirthService($this->birthday);
     }
 
     public function getPlainTextAge(): string
     {
-        $age = $this->dateOfBirthService->calculateAge();
-
-        return $this->dateOfBirthService->ageToPlainText($age);
+        return $this->dateOfBirthService->ageToPlainText();
     }
 
-    public function countWeekdays($weekdayName): string
+    public function countWeekdays(string $weekdayName): string
     {
-        $weekdaysAmount = $this->dateOfBirthService->calculateAmountOfWeekdays($weekdayName);
-
-        return $this->dateOfBirthService->generateAnswer($weekdayName, $weekdaysAmount);
+        return $this->dateOfBirthService->generateAnswer($weekdayName);
     }
 }

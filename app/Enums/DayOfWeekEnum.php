@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Enums;
+namespace App\Enums;
 enum DayOfWeekEnum: int
 {
     case Monday = 1;
@@ -16,8 +16,17 @@ enum DayOfWeekEnum: int
         return array_column(self::cases(), 'name');
     }
 
-    public static function getValue($weekdayName): int
+    public static function values(): array {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function array(): array
     {
-        return array_flip(self::names())[$weekdayName];
+        return array_combine(self::values(), self::names());
+    }
+
+    public static function getValue(string $weekdayName): int
+    {
+        return array_flip(self::array())[$weekdayName];
     }
 }
